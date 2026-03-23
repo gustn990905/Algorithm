@@ -2,50 +2,49 @@ import java.util.Scanner;
 
 public class Solution {
 	public static void main(String[] args) {
-		Scanner sc = new Scanner(System.in);
-
+		Scanner sc = new Scanner(System.in); // 입력의 수가 크지 않기 때문에 scanner 사용
+		
 		int T = sc.nextInt();
-		for (int t = 1; t <= T; t++) {
-			// 배열 A 길이 N, 배열 B 길이 M 입력
-			int N = sc.nextInt();
-			int M = sc.nextInt();
-			// 두 배열 생성
+		
+		for(int t=1; t<=T; t++) {
+			int N = sc.nextInt(); // 숫자열 A의 길이
+			int M = sc.nextInt(); // 숫자열 B의 길이
+			
 			int[] A = new int[N];
 			int[] B = new int[M];
 			
-			// 배열 A 입력
 			for(int a=0; a<N; a++) {
 				A[a] = sc.nextInt();
 			}
-			// 배열 B 입력
+			
 			for(int b=0; b<M; b++) {
 				B[b] = sc.nextInt();
 			}
 			
-			int maxResult = 0;
+			int maxResult = 0; // 마주보는 숫자들의 곱의 최댓값
+			 
 			
-			// A가 더 길거나 같은 경우
+			// 숫자열 A가 더 긴 경우
 			if(N >= M) {
-				// A 위에서 B를 한 칸씩 이동
-				for(int a=0; a<=N-M; a++) {
+				for(int i=0; i<=N-M; i++) {
 					int result = 0;
-					for(int b=0; b<M; b++) {
-						// 겹치는 부분 곱해서 더하기
-						result += A[a+b] * B[b];
+					for(int j=0; j<M; j++) {
+						result += A[i+j]*B[j];
 					}
 					maxResult = Math.max(maxResult, result);
 				}
 			} 
-			// B가 더 긴 경우
+			// 숫자열 B가 더 긴 경우
 			else {
-				for(int b=0; b<=M-N; b++) {
+				for(int i=0; i<=M-N; i++) {
 					int result = 0;
-					for(int a=0; a<N; a++) {
-						result += A[a] * B[a+b];
+					for(int j=0; j<N; j++) {
+						result += A[j]*B[j+i];
 					}
 					maxResult = Math.max(maxResult, result);
 				}
 			}
+			
 			System.out.println("#" + t + " " + maxResult);
 		}
 	}
