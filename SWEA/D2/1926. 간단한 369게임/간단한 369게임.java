@@ -1,33 +1,38 @@
-import java.util.Scanner;
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
 
 public class Solution {
-	public static void main(String[] args) {
-		Scanner sc = new Scanner(System.in);
-
-		int N = sc.nextInt();
+	
+	public static void main(String[] args) throws NumberFormatException, IOException {
+		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+		StringBuilder sb = new StringBuilder();
 		
-		for(int n=1; n<=N; n++) {
-			// 현재 숫자를 문자열로 변환 (각 자리 확인하기 위해)
-			String num = Integer.toString(n);
-			// 3, 6, 9의 개수를 저장할 변수
-			int count = 0;
+		int N = Integer.parseInt(br.readLine());
+		for(int i=1; i<=N; i++) {
+			String num = String.valueOf(i);
 			
-			for(int i=0; i<num.length(); i++) {
-				// 해당 자리가 3, 6, 9라면 count 증가
-				if(num.charAt(i) == '3' || num.charAt(i) == '6' || num.charAt(i) == '9') {
-					count++;
-				}
+			// 3, 6, 9를 포함하지 않는 경우
+			if(!num.contains("3") && !num.contains("6") && !num.contains("9")) {
+				sb.append(i).append(" ");
 			}
-			// 3,6,9가 하나도 없으면 숫자 그대로 출력
-			// 하나 이상 있으면 개수만큼 '-' 출력
-			if(count == 0) {
-				System.out.print(n + " ");
-			} else {
-				for(int j=0; j<count; j++) {
-					System.out.print("-");
+			
+			// 3, 6, 9를 포함하는 경우
+			else {
+				int cnt = 0;
+				for(int j=0; j<num.length(); j++) {
+					if(num.charAt(j) == '3' || num.charAt(j) == '6' || num.charAt(j) == '9') {
+						cnt++;
+					}
 				}
-				System.out.print(" ");
+				
+				for(int k=0; k<cnt; k++) {
+					sb.append("-");
+				}
+				sb.append(" ");
 			}
 		}
+		
+		System.out.println(sb);
 	}
 }
