@@ -7,38 +7,34 @@ public class Solution {
 		int T = sc.nextInt();
 
 		for (int t = 1; t <= T; t++) {
-			int N = sc.nextInt();
-
-			int[] start = new int[N];
-			int[] end = new int[N];
-
-			for (int i = 0; i < N; i++) {
-				start[i] = sc.nextInt();
+			int N = sc.nextInt(); // 스위치 개수
+			
+			// 조작 전 스위치 상태
+			int[] origin = new int[N];
+			for(int i=0; i<N; i++) {
+				origin[i] = sc.nextInt();
 			}
-
-			for (int i = 0; i < N; i++) {
-				end[i] = sc.nextInt();
+			
+			// 조작 후 스위치 상태
+			int[] result = new int[N];
+			for(int i=0; i<N; i++) {
+				result[i] = sc.nextInt();
 			}
-
-			int cnt = 0;
-
-			int i = 0;
-			while (!start.equals(end) && i < N) {
-				if (start[i] == end[i]) {
-					i++;
-				} else {
-					for (int j = i; j < N; j++) {
-						if (start[j] == 0) {
-							start[j] = 1;
-						} else {
-							start[j] = 0;
-						}
+			
+			int cnt = 0; // 조작 횟수
+			
+			for(int i=0; i<N; i++) {
+				// 조작 전 스위치와 조작 후 스위치의 같은 위치지만 값이 다른 경우
+				if(origin[i] != result[i]) {
+					for(int j=i; j<N; j++) {
+						if(origin[j] == 0) origin[j] = 1;
+						else origin[j] = 0;
 					}
+					
 					cnt++;
-					i++;
 				}
 			}
-
+			
 			System.out.println("#" + t + " " + cnt);
 		}
 	}
