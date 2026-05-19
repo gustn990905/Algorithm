@@ -2,50 +2,44 @@ import java.util.Scanner;
 
 public class Solution {
 	public static void main(String[] args) {
-		Scanner sc = new Scanner(System.in); // 입력의 수가 크지 않기 때문에 scanner 사용
+		Scanner sc = new Scanner(System.in);
 		
 		int T = sc.nextInt();
 		
 		for(int t=1; t<=T; t++) {
-			int N = sc.nextInt(); // 숫자열 A의 길이
-			int M = sc.nextInt(); // 숫자열 B의 길이
+			int N = sc.nextInt();
+			int M = sc.nextInt();
 			
 			int[] A = new int[N];
 			int[] B = new int[M];
 			
-			for(int a=0; a<N; a++) {
-				A[a] = sc.nextInt();
-			}
+			for(int a=0; a<N; a++) A[a] = sc.nextInt();
+			for(int b=0; b<M; b++) B[b] = sc.nextInt();
 			
-			for(int b=0; b<M; b++) {
-				B[b] = sc.nextInt();
-			}
-			
-			int maxResult = 0; // 마주보는 숫자들의 곱의 최댓값
-			 
-			
-			// 숫자열 A가 더 긴 경우
+			int maxAns = 0;
+			// N이 M보다 더 크거나 같은 경우
 			if(N >= M) {
 				for(int i=0; i<=N-M; i++) {
-					int result = 0;
+					int ans = 0;
 					for(int j=0; j<M; j++) {
-						result += A[i+j]*B[j];
+						ans += B[j]*A[i+j];
 					}
-					maxResult = Math.max(maxResult, result);
-				}
-			} 
-			// 숫자열 B가 더 긴 경우
-			else {
-				for(int i=0; i<=M-N; i++) {
-					int result = 0;
-					for(int j=0; j<N; j++) {
-						result += A[j]*B[j+i];
-					}
-					maxResult = Math.max(maxResult, result);
+					maxAns = Math.max(maxAns, ans);
 				}
 			}
 			
-			System.out.println("#" + t + " " + maxResult);
+			// N이 M보다 작은 경우
+			else {
+				for(int j=0; j<=M-N; j++) {
+					int ans = 0;
+					for(int i=0; i<N; i++) {
+						ans += B[i+j]*A[i];
+					}
+					maxAns = Math.max(maxAns, ans);
+				}
+			}
+			
+			System.out.println("#" + t + " " + maxAns);
 		}
 	}
 }
