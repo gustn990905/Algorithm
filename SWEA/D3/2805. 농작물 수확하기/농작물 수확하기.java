@@ -3,12 +3,13 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 
 public class Solution {
-	public static void main(String[] args) throws NumberFormatException, IOException {
+	public static void main(String[] args) throws IOException {
 		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 		
-		int T = Integer.parseInt(br.readLine()); // 테스트 케이스 개수 입력
-		for (int t = 1; t <= T; t++) {
-			int N = Integer.parseInt(br.readLine());
+		int T = Integer.parseInt(br.readLine());
+		
+		for(int t=1; t<=T; t++) {
+			int N = Integer.parseInt(br.readLine()); // 농장의 크기
 			
 			int[][] farm = new int[N][N];
 			
@@ -20,20 +21,21 @@ public class Solution {
 			}
 			
 			int result = 0;
-			for(int r=0; r<N/2; r++) {
-				for(int c=N/2-r; c<=N/2+r; c++) {
-					result += farm[r][c];
+			
+			// 농장의 위쪽의 농작물 합
+			for(int i=0; i<=N/2; i++) {
+				for(int j=N/2-i; j<=N/2+i; j++) {
+					result += farm[i][j];
 				}
 			}
 			
-			for(int c=0; c<N; c++) {
-				result += farm[N/2][c];
-			}
-			
-			for(int r=N/2+1; r<N; r++) {
-				for(int c=r-N/2; c<= N - (r-N/2) - 1; c++) {
-					result += farm[r][c];
+			// 아래쪽 농작물 합
+			int size = N/2-1;
+			for(int i=N/2+1; i<N; i++) {
+				for(int j=N/2-size; j<=N/2+size; j++) {
+					result += farm[i][j];
 				}
+				size--;
 			}
 			
 			System.out.println("#" + t + " " + result);
