@@ -1,49 +1,36 @@
 import java.util.Scanner;
 
-public class Solution {
-	public static void main(String[] args) {
+class Solution {
+    public static void main(String[] args) {
 		Scanner sc = new Scanner(System.in);
-
+		
 		int T = sc.nextInt();
-
-		for (int t = 1; t <= T; t++) {
+		
+		for(int t=1; t<=T; t++) {
 			int N = sc.nextInt();
 			int M = sc.nextInt();
 			String line = sc.next();
 			
-			char[] arr = new char[N];
+			StringBuilder sb = new StringBuilder();
 			
-			for(int n=0; n<N; n++) {
-				arr[n] = line.charAt(n);
-			}
-			
-			boolean go = false;
-			int findIdx = 0;
-			
-			for(int i=0; i<=N-M; i++) { 
-				boolean find = true;
-				for(int j=0; j<M/2; j++) {
-					if(arr[i + j] != arr[i + M - 1 - j]) {
-						find = false;
+			for(int i=0; i<=N-M; i++) {
+				boolean go = true;
+				for(int j=0; j<=M/2; j++) {
+					if(line.charAt(i+j) != line.charAt(i+M-1-j)) {
+						go = false;
 						break;
-					} 
+					}
 				}
 				
-				if(find) {
-			        go = true;
-			        findIdx = i;
-			        break; 
-			    }
+				if(go) {
+					for(int k=i; k<i+M; k++) {
+						sb.append(line.charAt(k));
+					}
+				}
 			}
 			
-			System.out.print("#" + t + " ");
-			if(go) {
-				for(int i=findIdx; i<findIdx+M; i++) {
-					System.out.print(arr[i]);
-				} System.out.println();
-			} else {
-				System.out.println("NONE");
-			}
+			if(sb.length()==0) System.out.println("#" + t + " NONE");
+			else System.out.println("#" + t + " " + sb);
 		}
 	}
 }
