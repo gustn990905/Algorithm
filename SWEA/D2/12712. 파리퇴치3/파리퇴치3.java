@@ -1,72 +1,58 @@
-import java.util.Scanner;
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.util.StringTokenizer;
 
-public class Solution {
-	public static void main(String[] args) {
-		Scanner sc = new Scanner(System.in);
-		
-		// 상하좌우 방향 (십자 모양)
-		int[] dr1 = {-1, 1, 0, 0};
-		int[] dc1 = {0, 0, -1, 1};
-		
-		// 대각선 방향 (X 모양)
-		int[] dr2 = {-1, -1, 1, 1};
-		int[] dc2 = {-1, 1, -1, 1};
-		
-		int T = sc.nextInt();
+class Solution {
+
+	static int[] dr1 = { -1, 0, 1, 0 };
+	static int[] dc1 = { 0, 1, 0, -1 };
+	static int[] dr2 = { -1, -1, 1, 1 };
+	static int[] dc2 = { -1, 1, 1, -1 };
+
+	public static void main(String[] args) throws NumberFormatException, IOException {
+		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+
+		int T = Integer.parseInt(br.readLine());
 
 		for (int t = 1; t <= T; t++) {
-			int N = sc.nextInt(); // 배열 크기
-			int M = sc.nextInt(); // 파리채 길이
-			
-			int[][] map = new int[N][N]; // 파리 개수 저장 배열
-			
-			for(int r=0; r<N; r++) {
-				for(int c=0; c<N; c++) {
-					map[r][c] = sc.nextInt();
+			StringTokenizer st = new StringTokenizer(br.readLine());
+
+			int N = Integer.parseInt(st.nextToken());
+			int M = Integer.parseInt(st.nextToken());
+
+			int[][] map = new int[N][N];
+			for (int r = 0; r < N; r++) {
+				st = new StringTokenizer(br.readLine());
+				for (int c = 0; c < N; c++) {
+					map[r][c] = Integer.parseInt(st.nextToken());
+				}
+			}
+
+			int maxKill = 0;
+			for (int r = 0; r < N; r++) {
+				for (int c = 0; c < N; c++) {
+
+					int kill1 = map[r][c]; // 중심값 포함
+					int kill2 = map[r][c];
+
+					for (int d = 0; d < 4; d++) {
+						for (int m = 1; m < M; m++) {
+							int nr1 = r + m * dr1[d];
+							int nc1 = c + m * dc1[d];
+							int nr2 = r + m * dr2[d];
+							int nc2 = c + m * dc2[d];
+
+							if(nr1 >= 0 && nr1 < N && nc1 >= 0 && nc1 < N) kill1 += map[nr1][nc1];
+
+							if(nr2 >= 0 && nr2 < N && nc2 >= 0 && nc2 < N) kill2 += map[nr2][nc2];
+						}
+					}
+					maxKill = Math.max(maxKill, Math.max(kill1, kill2));
 				}
 			}
 			
-			int maxTrap = 0; // 최대 잡은 파리 수
-			
-			for(int r=0; r<N; r++) {
-				for(int c=0; c<N; c++) {
-					
-					// 십자(+) 모양 파리채
-					int trap1 = map[r][c]; // 중심 좌표의 파리 수 포함
-					for(int i=0; i<4; i++) { // 상하좌우 4방향
-						for(int j=1; j<M; j++) {
-							int nr = r+dr1[i]*j;
-							int nc = c+dc1[i]*j;
-							
-							// 배열 범위를 벗어나면 해당 방향 탐색 중단
-							if(nr<0 || nr>=N || nc<0 || nc>=N) {
-								break;
-							}
-							
-							trap1 += map[nr][nc];
-						}
-					}
-					
-					// X 모양 파리채
-					int trap2 = map[r][c];
-					for(int i=0; i<4; i++) {
-						for(int j=1; j<M; j++) {
-							int nr = r+dr2[i]*j;
-							int nc = c+dc2[i]*j;
-							
-							if(nr<0 || nr>=N || nc<0 || nc>=N) {
-								break;
-							}
-							
-							trap2 += map[nr][nc];
-						}
-					}
-					
-					maxTrap = Math.max(maxTrap, Math.max(trap1, trap2));
-				}
-			}
-			
-			System.out.println("#" + t + " " + maxTrap);
+			System.out.println("#" + t + " " + maxKill);
 		}
 	}
 }
