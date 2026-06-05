@@ -1,0 +1,35 @@
+import java.util.Scanner;
+
+public class Main {
+
+	public static void main(String[] args) {
+		Scanner sc = new Scanner(System.in);
+		
+		int N = sc.nextInt(); // 움직이는 횟수
+		
+		// 시작 위치
+		int r = 0;
+		int c = 0;
+	
+		int ans = 0;
+		
+		outer:
+		for(int n=0; n<N; n++) {
+			String dir = sc.next(); // 이동 방향
+			int move = sc.nextInt(); // 이동한 거리
+			
+			for(int m=0; m<move; m++) {
+				if(dir.equals("W")) c--; // 서
+				else if(dir.equals("S")) r++; // 남
+				else if(dir.equals("N")) r--; // 북
+				else c++; // 동
+				
+				ans++; // 움직인 거리 1초 추가
+				if(r==0 && c==0) break outer;
+			}
+		}
+		
+		if(r==0 && c==0) System.out.println(ans);
+		else System.out.println(-1);
+	}
+}

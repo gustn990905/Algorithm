@@ -1,0 +1,45 @@
+import java.util.Scanner;
+
+public class Main {
+
+	public static void main(String[] args) {
+		Scanner sc = new Scanner(System.in);
+		
+		int N = sc.nextInt(); // 선분의 수
+		
+		int[][] line = new int[N][2];
+		for(int n=0; n<N; n++) {
+			line[n][0] = sc.nextInt();
+			line[n][1] = sc.nextInt();
+		}
+		
+		int result = 0;
+		// 제거할 선분 3개
+		for(int i=0; i<N-2; i++) {
+			for(int j=i+1; j<N-1; j++) {
+				for(int k=j+1; k<N; k++) {
+					
+					// 선분들이 겹치는지 확인하기
+					boolean[] check = new boolean[101];
+					boolean possible = true;
+					outer:
+					for(int l=0; l<N; l++) {
+						if(l==i || l==j || l==k) continue;
+						
+						for(int a=line[l][0]; a<=line[l][1]; a++) {
+							if(!check[a]) check[a] = true;
+							else {
+								possible = false;
+								break outer;
+							}
+						}
+					}
+					
+					if(possible) result++;
+				}
+			}
+		}
+		
+		System.out.println(result);
+	}
+}

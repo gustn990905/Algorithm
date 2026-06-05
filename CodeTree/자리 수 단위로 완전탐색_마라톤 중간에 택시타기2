@@ -1,0 +1,49 @@
+import java.util.Scanner;
+
+public class Main {
+	public static void main(String[] args) {
+		Scanner sc = new Scanner(System.in);
+
+		int N = sc.nextInt();
+
+		int[][] route = new int[N][2];
+
+		for (int i = 0; i < N; i++) {
+			route[i][0] = sc.nextInt();
+			route[i][1] = sc.nextInt();
+		}
+
+		int minDist = Integer.MAX_VALUE;
+
+		// pass 번호를 건너뛴다
+		for (int pass = 1; pass < N - 1; pass++) {
+
+			int total = 0;
+
+			for (int i = 0; i < N - 1; i++) {
+
+				// pass -> pass+1 연결 제거
+				if (i == pass)
+					continue;
+
+				// pass-1 에서 pass+1 로 연결
+				if (i + 1 == pass) {
+
+					total += dist(route[i][0], route[i][1], route[i + 2][0], route[i + 2][1]);
+
+				} else {
+
+					total += dist(route[i][0], route[i][1], route[i + 1][0], route[i + 1][1]);
+				}
+			}
+
+			minDist = Math.min(minDist, total);
+		}
+
+		System.out.println(minDist);
+	}
+
+	static int dist(int x1, int y1, int x2, int y2) {
+		return Math.abs(x1 - x2) + Math.abs(y1 - y2);
+	}
+}

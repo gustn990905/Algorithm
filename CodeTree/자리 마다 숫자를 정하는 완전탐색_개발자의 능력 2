@@ -1,0 +1,47 @@
+import java.util.Scanner;
+
+public class Main {
+	public static void main(String[] args) {
+		Scanner sc = new Scanner(System.in);
+		
+		int[] people = new int[6];
+		
+		int team = 0;
+		for(int i=0; i<6; i++) {
+			people[i] = sc.nextInt();
+			team += people[i];
+		}
+		
+		int result = Integer.MAX_VALUE;
+		
+		// 첫 번째 팀 선택
+		for(int i=0; i<6; i++) {
+			for(int j=i+1; j<6; j++) {
+				
+				boolean[] used = new boolean[6];
+				used[i] = true;
+				used[j] = true;
+				
+				// 두 번째 팀 선택
+				for(int k=0; k<6; k++) {
+					if(used[k]) continue;
+					
+					for(int l=k+1; l<6; l++) {
+						if(used[l]) continue;
+						
+						int team1 = people[i] + people[j];
+						int team2 = people[k] + people[l];
+						int team3 = team - team1 - team2;
+						
+						int max = Math.max(team1, Math.max(team2, team3));
+						int min = Math.min(team1, Math.min(team2, team3));
+						
+						result = Math.min(result, max-min);
+					}
+				}
+			}
+		}
+		
+		System.out.println(result);
+	}
+}

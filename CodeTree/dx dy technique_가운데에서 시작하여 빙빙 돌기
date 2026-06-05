@@ -1,0 +1,46 @@
+import java.util.Scanner;
+
+public class Main {
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+        
+        int N = sc.nextInt(); // 정사각형의 크기
+        
+        int[][] arr = new int[N][N];
+        
+        // 오 상 왼 하
+        int[] dr = {0, -1, 0, 1};
+        int[] dc = {1, 0, -1, 0};
+        
+        int dir = 0; // 현재 방향: 시작 방향은 0
+        int r = N/2; // 현재 r
+        int c = N/2; // 현재 c
+        arr[r][c] = 1;
+        
+        // 다음 방향이 비어있으면 방향 바꾸기
+        // 다음 방향이 비어있지 않으면 직진
+        for(int i=2; i<=N*N; i++) {
+        	// 현재 방향으로 일단 직진
+        	r += dr[dir];
+        	c += dc[dir];
+        	
+        	arr[r][c] = i; 
+        	
+        	// 다음 방향으로 회전 
+        	int ndir = (dir + 1) % 4;
+        	
+        	int nr = r + dr[ndir];
+        	int nc = c + dc[ndir];
+        	
+        	if(nr<0 || nr>=N || nc<0 || nc>=N || arr[nr][nc] == 0) {
+        		dir = ndir;
+        	}
+        }
+        
+        for(int i=0; i<N; i++) {
+        	for(int j=0; j<N; j++) {
+        		System.out.print(arr[i][j] + " ");
+        	}System.out.println();
+        }
+    }
+}

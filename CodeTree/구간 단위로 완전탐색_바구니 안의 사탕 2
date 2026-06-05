@@ -1,0 +1,38 @@
+import java.util.Scanner;
+
+class Main {
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+
+        int N = sc.nextInt(); // 바구니의 개수
+        int K = sc.nextInt(); // 범위
+        
+        int[] map = new int[102];
+        
+        for(int n=0; n<N; n++) {
+            int candy = sc.nextInt();
+            int loc = sc.nextInt();
+            
+            map[loc] += candy; // 같은 위치에 여러 바구니 놓인 것 가능
+        }
+        
+        int maxCandy = 0;
+        
+        // 중심점 후보를 모두 확인
+        for(int c=0; c<102; c++) {
+            int start = c - K;
+            int end = c + K;
+            
+            int cnt = 0;
+            for(int i=start; i<=end; i++) {
+                if(i < 0 || i > 101) continue;
+                
+                cnt += map[i];
+            }
+            
+            maxCandy = Math.max(maxCandy, cnt);
+        }
+        
+        System.out.println(maxCandy);
+    }
+}

@@ -1,0 +1,79 @@
+import java.util.*;
+
+public class Main {
+
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+
+        int N = sc.nextInt();
+        int M = sc.nextInt();
+        int D = sc.nextInt();
+        int S = sc.nextInt();
+
+        int[] person = new int[D];
+        int[] cheese = new int[D];
+        int[] time = new int[D];
+
+        for(int i = 0; i < D; i++) {
+            person[i] = sc.nextInt();
+            cheese[i] = sc.nextInt();
+            time[i] = sc.nextInt();
+        }
+
+        int[] sickPerson = new int[S];
+        int[] sickTime = new int[S];
+
+        for(int i = 0; i < S; i++) {
+            sickPerson[i] = sc.nextInt();
+            sickTime[i] = sc.nextInt();
+        }
+
+        int answer = 0;
+
+        // 모든 치즈를 상한 치즈라고 가정
+        for(int target = 1; target <= M; target++) {
+
+            boolean possible = true;
+
+            // 모든 아픈 사람 검사
+            for(int i = 0; i < S; i++) {
+
+                boolean ate = false;
+
+                for(int j = 0; j < D; j++) {
+
+                    if(person[j] == sickPerson[i]
+                            && cheese[j] == target
+                            && time[j] < sickTime[i]) {
+
+                        ate = true;
+                        break;
+                    }
+                }
+
+                if(!ate) {
+                    possible = false;
+                    break;
+                }
+            }
+
+            if(!possible) continue;
+
+            // 이 치즈가 상했다면 몇 명이 약을 먹어야 하는가
+            boolean[] visited = new boolean[N + 1];
+            int cnt = 0;
+
+            for(int i = 0; i < D; i++) {
+
+                if(cheese[i] == target && !visited[person[i]]) {
+                    visited[person[i]] = true;
+                    cnt++;
+                }
+            }
+
+            answer = Math.max(answer, cnt);
+        }
+
+        System.out.println(answer);
+    }
+}

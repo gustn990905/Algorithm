@@ -1,0 +1,51 @@
+import java.util.Scanner;
+
+public class Main {
+	public static void main(String[] args) {
+		Scanner sc = new Scanner(System.in);
+		// 북 동 남 서
+		int[] dr = {-1, 0, 1, 0};
+		int[] dc = {0, 1, 0, -1};
+
+		int N = sc.nextInt(); // 정사각형 모양의 격자 정보
+		int T = sc.nextInt(); // 이동할 명령의 수
+
+		String command = sc.next(); // 이동할 명령
+
+		int[][] map = new int[N][N];
+
+		for (int r = 0; r < N; r++) {
+			for (int c = 0; c < N; c++) {
+				map[r][c] = sc.nextInt();
+			}
+		}
+		
+		int dir = 0; // 현재 방향: 시작 방향은 북쪽
+		// 현재 위치: 시작 위치는 가운데
+		int r = N/2;
+		int c = N/2;
+		
+		int result = map[r][c];
+		
+		for(int i=0; i<T; i++) {
+			char go = command.charAt(i);
+			
+			if(go == 'L') dir = (dir+3) % 4;
+			else if(go =='R') dir = (dir+1) % 4;
+			else {
+				int nr = r + dr[dir];
+				int nc = c + dc[dir];
+				
+				// 범위를 벗어나면 무시
+				if(nr<0 || nr>=N || nc<0 || nc>=N) continue;
+				
+				r += dr[dir];
+				c += dc[dir];
+				
+				result += map[r][c];
+			}
+		}
+		
+		System.out.println(result);
+	}
+}

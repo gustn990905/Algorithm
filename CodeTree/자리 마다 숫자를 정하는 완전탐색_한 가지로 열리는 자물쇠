@@ -1,0 +1,28 @@
+import java.util.Scanner;
+
+public class Main {
+	public static void main(String[] args) {
+		Scanner sc = new Scanner(System.in);
+		
+		int N = sc.nextInt();
+		
+		// 주어지는 조합
+		int a = sc.nextInt();
+		int b = sc.nextInt();
+		int c = sc.nextInt();
+		
+		int result = 0;
+	
+		for(int x=1; x<=N; x++) {
+			for(int y=1; y<=N; y++) {
+				for(int z=1; z<=N; z++) {
+					if(Math.abs(a-x) <= 2 || Math.abs(b-y) <= 2 || Math.abs(c-z) <= 2) {
+						result++;
+					}
+				}
+			}
+		}
+		
+		System.out.println(result);
+	}
+}

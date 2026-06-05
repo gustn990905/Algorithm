@@ -1,0 +1,49 @@
+import java.util.Scanner;
+public class Main {
+	
+	// 방향이 오 하 왼 상 순서대로 움직임
+	static int[] dr = {0, 1, 0, -1};
+	static int[] dc = {1, 0, -1, 0};
+	
+	static int N;
+	static int M;
+	
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+        N = sc.nextInt(); // 행
+        M = sc.nextInt(); // 열
+
+        int[][] arr = new int[N][M];
+        
+        int r = 0;
+        int c = 0;
+        arr[r][c] = 1; // 처음 숫자는 1로 채움
+        int dir = 0; // 초기 방향은 0
+        
+        for(int i=2; i<=N*M; i++) {
+        	int nr = r + dr[dir];
+        	int nc = c + dc[dir];
+        	
+        	// 더 이상 나아갈 수 없으면 회전
+        	if(!possible(nr, nc) || arr[nr][nc] != 0) {
+        		dir = (dir+1) % 4;
+        	}
+        	
+        	r = r + dr[dir];
+        	c = c + dc[dir];
+        	
+        	arr[r][c] = i;
+        }
+        
+        for(int i=0; i<N; i++) {
+        	for(int j=0; j<M; j++) {
+        		System.out.print(arr[i][j] + " ");
+        	} System.out.println();
+        }
+    }
+    
+    static boolean possible(int x, int y) {
+    	if(x<0 || x>=N || y<0 || y>=M) return false;
+    	return true;
+    }
+}

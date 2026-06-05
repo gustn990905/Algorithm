@@ -1,0 +1,38 @@
+import java.util.Scanner;
+
+public class Main {
+	public static void main(String[] args) {
+		Scanner sc = new Scanner(System.in);
+
+		int N = sc.nextInt();
+		
+		int[][] work = new int[N][2];
+		
+		for(int w=0; w<N; w++) {
+			work[w][0] = sc.nextInt();
+			work[w][1] = sc.nextInt();
+		}
+		
+		int maxWork = 0;
+		// 해고할 직원
+		for(int i=0; i<N; i++) {
+			
+			// 일하는 시간 계산
+			boolean[] workTime = new boolean[1001];
+			int time = 0; // 일하는 시간
+			for(int j=0; j<N; j++) {				
+				if(i == j) continue;
+				
+				for(int t=work[j][0]; t<work[j][1]; t++) {
+					if(!workTime[t]) {
+						workTime[t] = true;
+						time++;
+					}
+				}
+			}
+			maxWork = Math.max(maxWork, time);
+		}
+		
+		System.out.println(maxWork);
+	}
+}

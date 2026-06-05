@@ -1,0 +1,56 @@
+import java.util.Scanner;
+
+public class Main {
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+
+        int N = sc.nextInt();
+
+        int[] whiteCount = new int[200001];
+        int[] blackCount = new int[200001];
+        int[] state = new int[200001];
+
+        int now = 100000;
+
+        for (int i = 0; i < N; i++) {
+            int x = sc.nextInt();
+            String dir = sc.next();
+
+            if (dir.equals("R")) {
+                for (int j = 0; j < x; j++) {
+                    blackCount[now]++;
+
+                    if (whiteCount[now] >= 2 && blackCount[now] >= 2) {
+                        state[now] = 3;
+                    } else if (state[now] != 3) {
+                        state[now] = 2;
+                    }
+
+                    if (j != x - 1) now++;
+                }
+            } else {
+                for (int j = 0; j < x; j++) {
+                    whiteCount[now]++;
+
+                    if (whiteCount[now] >= 2 && blackCount[now] >= 2) {
+                        state[now] = 3;
+                    } else if (state[now] != 3) {
+                        state[now] = 1;
+                    }
+
+                    if (j != x - 1) now--;
+                }
+            }
+        }
+
+        int white = 0, black = 0, gray = 0;
+
+        for (int i = 0; i < 200001; i++) {
+            if (state[i] == 1) white++;
+            else if (state[i] == 2) black++;
+            else if (state[i] == 3) gray++;
+        }
+
+        System.out.println(white + " " + black + " " + gray);
+    }
+}

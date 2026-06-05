@@ -1,0 +1,65 @@
+import java.util.Scanner;
+
+public class Main {
+	
+	static int R, C;
+	static int[][] map;
+	static int answer;
+	
+    public static void main(String[] args) {
+    	Scanner sc = new Scanner(System.in);
+    	
+    	R = sc.nextInt(); // 행의 크기
+    	C = sc.nextInt(); // 열의 크기
+    	
+    	map = new int[R][C];
+    	
+    	// 오 하
+    	int[] dr = {0, 1};
+    	int[] dc = {1, 0};
+    	
+    	// W면 1, B면 0
+    	for(int r=0; r<R; r++) {
+    		for(int c=0; c<C; c++) {
+    			String color = sc.next();
+    			
+    			if(color.equals("W")) map[r][c] = 1;
+    			else map[r][c] = 0;
+    		}
+    	}
+    	
+    	answer = 0;
+    	
+    	dfs(0, 0, 0);
+    	
+    	System.out.println(answer);
+    }
+    
+    static void dfs(int r, int c, int cnt) {
+    	// 종료 조건
+    	if(r == R - 1 && c == C - 1) {
+            if(cnt == 2) {
+                answer++;
+            }
+            return;
+        }
+    	
+    	// 중간 지점이 2개를 넘으면 return
+    	if(cnt > 2) return; 
+    	
+    	for(int nr = r+1; nr<R; nr++) {
+    		for(int nc=c+1; nc<C; nc++) {
+    			
+    			// 색이 달라야 함
+    			if(map[nr][nc] != map[r][c]) {
+    				
+    				// 도착 지점이면 cnt 증가하지 않음
+    				if(nr == R-1 && nc == C-1) dfs(nr, nc, cnt);
+    				
+    				// 도착 지점이 아닌 중간 지점이면 cnt 증가
+    				else dfs(nr, nc, cnt+1);
+    			}
+    		}
+    	}
+    }
+}

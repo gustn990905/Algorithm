@@ -1,0 +1,68 @@
+import java.util.Scanner;
+
+public class Main {
+	public static void main(String[] args) {
+		Scanner sc = new Scanner(System.in);
+
+		int N = sc.nextInt(); // A가 이동한 횟수
+		int M = sc.nextInt(); // B가 이동한 횟수
+
+		int[] A = new int[10000000];
+		int[] B = new int[10000000];
+
+		// A가 이동한 거리 저장
+		int timeA = 1;
+		for (int n = 0; n < N; n++) {
+			int t = sc.nextInt(); // 이동한 초
+			String d = sc.next(); // 이동한 방향
+
+			while (t-- > 0) {
+				if (d.equals("R")) {
+					A[timeA] = A[timeA - 1] + 1; // R방향이면 오른쪽으로 1만큼 움직임
+				} else {
+					A[timeA] = A[timeA - 1] - 1;
+				}
+
+				timeA++;
+			}
+		}
+
+		// B가 이동한 거리 저장
+		int timeB = 1;
+		for (int m = 0; m < M; m++) {
+			int t = sc.nextInt();
+			String d = sc.next();
+
+			while (t-- > 0) {
+				if (d.equals("R")) {
+					B[timeB] = B[timeB - 1] + 1;
+				} else {
+					B[timeB] = B[timeB - 1] - 1;
+				}
+
+				timeB++;
+			}
+		}
+
+		int maxTime = Math.max(timeA, timeB);
+
+		// 위치 유지
+		for (int i = timeA; i <= maxTime; i++) {
+			A[i] = A[timeA - 1];
+		}
+		for (int i = timeB; i <= maxTime; i++) {
+			B[i] = B[timeB - 1];
+		}
+
+		// 둘 다 끝난 이후 제외
+		int endTime = Math.max(timeA - 1, timeB - 1);
+
+		int ans = 0;
+		for (int i = 1; i <= endTime; i++) {
+			if (A[i] == B[i] && A[i - 1] != B[i - 1])
+				ans++;
+		}
+		
+		System.out.println(ans);
+	}
+}

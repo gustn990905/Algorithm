@@ -1,0 +1,70 @@
+import java.util.Arrays;
+import java.util.Scanner;
+
+public class Main {
+
+	static class Developer implements Comparable<Developer> {
+		int time;
+		int person1;
+		int person2;
+
+		public Developer(int time, int person1, int person2) {
+			this.time = time;
+			this.person1 = person1;
+			this.person2 = person2;
+		}
+
+		@Override
+		public int compareTo(Developer o) {
+			return this.time - o.time;
+		}
+	}
+
+	public static void main(String[] args) {
+		Scanner sc = new Scanner(System.in);
+
+		int N = sc.nextInt(); // 개발자의 수
+		int K = sc.nextInt(); // 전염병을 옮기게 되는 수
+		int P = sc.nextInt(); // 처음 전염병에 걸려 있는 개발자의 번호
+		int T = sc.nextInt(); // 악수를 나눈 횟수
+
+		Developer[] developer = new Developer[T];
+		int[] check = new int[N]; // 악수를 나눈 횟수 저장하는 배열
+		int[] infected = new int[N]; // 감염된 사람들 체크
+
+		for (int t = 0; t < T; t++) {
+			int time = sc.nextInt();
+			int person1 = sc.nextInt();
+			int person2 = sc.nextInt();
+
+			developer[t] = new Developer(time, person1, person2);
+		}
+
+		// 시간이 빠른 순서로 developer 정리
+		Arrays.sort(developer);
+
+		// 첫 번째 감염자 감염 처리
+		infected[P - 1] = 1;
+
+		for (int t = 0; t < T; t++) {
+			int person1 = developer[t].person1 - 1;
+			int person2 = developer[t].person2 - 1;
+
+			boolean p1Infected = infected[person1] == 1;
+			boolean p2Infected = infected[person2] == 1;
+
+			if (p1Infected && check[person1] < K) {
+				infected[person2] = 1;
+				check[person1]++;
+			}
+
+			if (p2Infected && check[person2] < K) {
+				infected[person1] = 1;
+				check[person2]++;
+			}
+		}
+		for (int i = 0; i < N; i++) {
+			System.out.print(infected[i]);
+		}
+	}
+}

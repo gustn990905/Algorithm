@@ -1,0 +1,37 @@
+import java.util.Arrays;
+import java.util.Scanner;
+
+public class Main {
+	public static void main(String[] args) {
+		Scanner sc = new Scanner(System.in);
+
+		int N = sc.nextInt(); // 학생 수
+		int B = sc.nextInt(); // 예산
+		int[] P = new int[N];
+		
+		for(int p=0; p<N; p++) {
+			P[p] = sc.nextInt();
+		}
+		
+		Arrays.sort(P);
+		
+		int max = 0;
+		// 할인 쿠폰을 적용할 선물
+		for(int i=0; i<N; i++) {
+			int cnt = 0; // 선물을 줄 수 있는 학생 수
+			int sum = 0; // 선물의 값의 합
+			for(int j=0; j<N; j++) {
+				int now = 0;
+				if(i == j) now = P[j] / 2;
+				else now = P[j];
+				
+				if(sum + now <= B) {
+					cnt++;
+					sum += now;
+				}
+			}
+			max = Math.max(max, cnt);
+		}
+		System.out.println(max);
+	}
+}

@@ -1,0 +1,39 @@
+import java.util.Scanner;
+
+public class Main {
+	public static void main(String[] args) {
+		Scanner sc = new Scanner(System.in);
+		
+		int[] dr = {-1, 0, 1, 0};
+		int[] dc = {0, -1, 0, 1};
+		
+		int N = sc.nextInt(); // 격자의 크기
+		int M = sc.nextInt(); // 색칠할 횟수
+		
+		int[][] arr = new int[101][101];
+		
+		for(int m=0; m<M; m++) {
+			int r = sc.nextInt();
+			int c = sc.nextInt();
+			
+			// 입력된 칸 색칠하기
+			arr[r][c] = 1;
+			
+			int cnt = 0; // 색칠된 칸 세기
+			
+			// 주변 칸이 정확이 3칸 칠해져있는지 확인하기
+			for(int i=0; i<4; i++) {
+				int nr = r + dr[i];
+				int nc = c + dc[i];
+				
+				// 범위 벗어나면 continue;
+				if(nr<0 || nr>=101 || nc<0 || nc>=101) continue;
+				
+				if(arr[nr][nc] == 1) cnt++;
+			}
+			
+			if(cnt == 3) System.out.println(1);
+			else System.out.println(0);
+		}
+	}
+}

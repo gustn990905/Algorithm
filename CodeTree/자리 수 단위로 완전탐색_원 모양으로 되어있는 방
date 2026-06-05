@@ -1,0 +1,34 @@
+import java.util.Scanner;
+
+public class Main {
+	public static void main(String[] args) {
+		Scanner sc = new Scanner(System.in);
+
+		int N = sc.nextInt();
+
+		int[] member = new int[N];
+
+		for (int n = 0; n < N; n++) {
+			member[n] = sc.nextInt();
+		}
+
+		int answer = Integer.MAX_VALUE;
+
+		// 시작 방
+		for (int start = 0; start < N; start++) {
+
+			int total = 0;
+
+			// 각 방까지 이동
+			for (int dist = 0; dist < N; dist++) {
+
+				int idx = (start + dist) % N;
+
+				total += member[idx] * dist;
+			}
+
+			answer = Math.min(answer, total);
+		}
+		System.out.println(answer);
+	}
+}

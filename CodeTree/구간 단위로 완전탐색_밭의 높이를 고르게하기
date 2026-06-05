@@ -1,0 +1,31 @@
+import java.util.Scanner;
+
+public class Main {
+	public static void main(String[] args) {
+		Scanner sc = new Scanner(System.in);
+
+		int N = sc.nextInt(); // N개의 밭
+		int H = sc.nextInt(); // 연속 T번 이상
+		int T = sc.nextInt(); // 높이의 조건
+
+		int[] map = new int[N];
+		for (int n = 0; n < N; n++) {
+			map[n] = sc.nextInt();
+		}
+
+		int minResult = Integer.MAX_VALUE;
+
+		for (int n = 0; n <= N - T; n++) {
+			int cut = 0;
+			for (int t = 0; t < T; t++) {
+				if(map[n+t] == H) continue;
+				
+				cut += Math.abs(map[n+t] - H);
+			}
+			
+			minResult = Math.min(minResult, cut);
+		}
+
+		System.out.println(minResult);
+	}
+}

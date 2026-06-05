@@ -1,0 +1,53 @@
+import java.util.Scanner;
+
+public class Main {
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+
+        int N = sc.nextInt();
+
+        String[] loc = new String[102];
+
+        int min = 101;
+        int max = 0;
+
+        for (int n = 0; n < N; n++) {
+            int l = sc.nextInt();
+            String f = sc.next();
+
+            loc[l] = f;
+
+            min = Math.min(min, l);
+            max = Math.max(max, l);
+        }
+
+        int result = 0;
+
+        // 모든 구간 탐색
+        for (int i = min; i <= max; i++) {
+
+            if (loc[i] == null) continue;
+
+            int g = 0;
+            int h = 0;
+
+            for (int j = i; j <= max; j++) {
+
+                if (loc[j] == null) continue;
+
+                if (loc[j].equals("G")) {
+                    g++;
+                } else {
+                    h++;
+                }
+
+                // 조건 만족
+                if (g == 0 || h == 0 || g == h) {
+                    result = Math.max(result, j - i);
+                }
+            }
+        }
+
+        System.out.println(result);
+    }
+}

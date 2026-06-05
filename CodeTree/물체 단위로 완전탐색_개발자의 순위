@@ -1,0 +1,45 @@
+import java.util.Scanner;
+
+public class Main {
+
+	public static void main(String[] args) {
+		Scanner sc = new Scanner(System.in);
+		
+		int a = sc.nextInt();
+		int b = sc.nextInt();
+		
+		int[][] map = new int[a][b];
+		for(int r=0; r<a; r++) {
+			for(int c=0; c<b; c++) {
+				map[r][c] = sc.nextInt();
+			}
+		}
+		
+		int cnt = 0;
+		for(int i=0; i<b-1; i++) {
+			for(int j=i+1; j<b; j++) {
+				int aa = map[0][i];
+				int bb = map[0][j];
+				
+				// 두 번째 행부터 확인
+				boolean possible = true;
+				outer:
+				for(int k=1; k<a; k++) {
+					int idxA = 0;
+					int idxB = 0;
+					for(int ii=0; ii<b; ii++) {
+						if(map[k][ii] == aa) idxA = ii;
+						else if(map[k][ii] == bb) idxB = ii;
+					}
+					if(idxA > idxB) {
+						possible = false;
+						break outer;
+					}
+				}
+				
+				if(possible) cnt++;
+			}
+		}
+		System.out.println(cnt);
+	}
+}

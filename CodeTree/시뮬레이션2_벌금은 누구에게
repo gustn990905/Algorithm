@@ -1,0 +1,28 @@
+import java.util.Scanner;
+
+public class Main {
+	public static void main(String[] args) {
+		Scanner sc = new Scanner(System.in);
+
+		int N = sc.nextInt(); // 학생 수
+		int M = sc.nextInt(); // 벌칙에 걸린 학생의 번호 수
+		int K = sc.nextInt(); // 벌금을 내야하는 기준
+
+		int[] yellowCard = new int[N]; // 벌칙을 받는 수 저장
+
+		int ans = -1;
+
+		for (int m = 0; m < M; m++) {
+			int student = sc.nextInt() - 1; // 학생 수는 0부터 시작하게 함
+
+			yellowCard[student]++;
+
+			if (yellowCard[student] >= K) {
+				ans = student + 1;
+				break;
+			}
+		}
+
+		System.out.println(ans);
+	}
+}

@@ -1,0 +1,28 @@
+import java.util.Scanner;
+
+public class Main {
+	public static void main(String[] args) {
+		Scanner sc = new Scanner(System.in);
+		
+		int N = sc.nextInt(); // 집의 개수
+		int[] house = new int[N];
+		
+		for(int i=0; i<N; i++) {
+			house[i] = sc.nextInt();
+		}
+		
+		int minDist = Integer.MAX_VALUE;
+		
+		for(int i=0; i<N; i++) {
+			int target = house[i]; // 현재 선택한 집
+			
+			int dist = 0;
+			for(int j=0; j<N; j++) {
+				dist += Math.abs(j-i) * house[j];
+			}
+			minDist = Math.min(minDist, dist);
+		}
+		
+		System.out.println(minDist);
+	}
+}

@@ -1,0 +1,49 @@
+import java.util.Scanner;
+
+class Solution {
+	public static void main(String[] args) {
+		Scanner sc = new Scanner(System.in);
+
+		int N = sc.nextInt();
+		int M = sc.nextInt();
+
+		int[] A = new int[N];
+		int[] B = new int[M];
+
+		for (int a = 0; a < N; a++) {
+			A[a] = sc.nextInt();
+		}
+
+		for (int b = 0; b < M; b++) {
+			B[b] = sc.nextInt();
+		}
+
+		int cnt = 0;
+		for (int i = 0; i <= N - M; i++) {
+			boolean[] check = new boolean[M];
+			boolean possible = true;
+
+			for (int j = 0; j < M; j++) {
+				int target = A[i + j];
+				boolean found = false;
+
+				for (int k = 0; k < M; k++) {
+					if (target == B[k] && !check[k]) {
+						check[k] = true;
+						found = true;
+						break;
+					}
+				}
+				
+				if(!found) {
+                    possible = false;
+                    break;
+                }
+			}
+			
+			if(possible) cnt++;
+		}
+
+		System.out.println(cnt);
+	}
+}

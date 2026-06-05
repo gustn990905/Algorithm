@@ -1,0 +1,55 @@
+import java.util.Scanner;
+
+public class Main {
+	public static void main(String[] args) {
+		Scanner sc = new Scanner(System.in);
+
+		int N = sc.nextInt(); // A가 이동한 횟수
+		int M = sc.nextInt(); // B가 이동한 횟수
+		
+		int[] A = new int[1000000];
+		int[] B = new int[1000000];
+		
+		// A가 매 초마다 서 있는 위치
+		int timeA = 1;
+		for(int n=0; n<N; n++) {
+			int v = sc.nextInt();
+			int t = sc.nextInt();
+			
+			while(t-- > 0) {
+				A[timeA] = A[timeA-1] + v; // 그 전 시간보다 v만큼 움직임
+				timeA++;
+			}
+		}
+		
+		// B가 매 초마다 서 있는 위치 
+		int timeB = 1;
+		for(int m=0; m<M; m++) {
+			int v = sc.nextInt();
+			int t = sc.nextInt();
+			
+			while(t-- > 0) {
+				B[timeB] = B[timeB-1] + v;
+				timeB++;
+			}
+		}
+		
+		// A가 리더인 경우 1, B가 리더인 경우 2
+		int leader = 0;
+		int ans = 0;
+		
+		for(int i=1; i<timeA; i++) {
+			if(A[i] > B[i]) {
+				if(leader == 2) ans++;
+
+				leader = 1;
+			} else if(A[i] < B[i]) {
+				if(leader == 1) ans++;
+				
+				leader = 2;
+			}
+		}
+		
+		System.out.println(ans);
+	}
+}

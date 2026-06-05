@@ -1,0 +1,52 @@
+import java.util.Scanner;
+
+public class Main {
+	public static void main(String[] args) {
+		Scanner sc = new Scanner(System.in);
+
+		int[][] map = new int[2002][2002];
+
+		int ar1 = sc.nextInt() + 1000;
+		int ac1 = sc.nextInt() + 1000;
+		int ar2 = sc.nextInt() + 1000;
+		int ac2 = sc.nextInt() + 1000;
+
+		for (int r = ar1; r < ar2; r++) {
+			for (int c = ac1; c < ac2; c++) {
+				map[r][c] = 1;
+			}
+		}
+
+		int br1 = sc.nextInt() + 1000;
+		int bc1 = sc.nextInt() + 1000;
+		int br2 = sc.nextInt() + 1000;
+		int bc2 = sc.nextInt() + 1000;
+
+		for (int r = br1; r < br2; r++) {
+			for (int c = bc1; c < bc2; c++) {
+				if (map[r][c] == 1)
+					map[r][c] = 0;
+			}
+		}
+
+		int minR = 2002, minC = 2002;
+		int maxR = -1, maxC = -1;
+
+		for (int r = 0; r < 2002; r++) {
+			for (int c = 0; c < 2002; c++) {
+				if (map[r][c] == 1) {
+					maxR = Math.max(r, maxR);
+					minR = Math.min(r, minR);
+					maxC = Math.max(c, maxC);
+					minC = Math.min(c, minC);
+				}
+			}
+		}
+
+		if (maxR == -1) {
+			System.out.println(0);
+		} else {
+			System.out.println((maxR - minR + 1) * (maxC - minC + 1));
+		}
+	}
+}

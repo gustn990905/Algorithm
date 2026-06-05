@@ -1,0 +1,44 @@
+import java.util.Scanner;
+
+public class Main {
+	public static void main(String[] args) {
+		Scanner sc = new Scanner(System.in);
+
+		int N = sc.nextInt();
+
+		int[] arr = new int[N];
+
+		for (int n = 0; n < N; n++) {
+			arr[n] = sc.nextInt();
+		}
+
+		int cnt = N; // 1개씩 선택하면 평균이 곧 그 원소
+
+		for (int select = 2; select <= N; select++) {
+
+			for (int i = 0; i <= N - select; i++) {
+
+				int sum = 0;
+
+				for (int j = 0; j < select; j++) {
+					sum += arr[i + j];
+				}
+
+				// 평균이 정수일 때만 검사
+				if (sum % select != 0)
+					continue;
+
+				int avg = sum / select;
+
+				for (int j = 0; j < select; j++) {
+					if (avg == arr[i + j]) {
+						cnt++;
+						break;
+					}
+				}
+			}
+		}
+
+		System.out.println(cnt);
+	}
+}

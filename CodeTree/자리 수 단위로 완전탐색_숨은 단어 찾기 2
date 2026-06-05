@@ -1,0 +1,52 @@
+import java.util.Scanner;
+
+public class Main {
+	public static void main(String[] args) {
+		Scanner sc = new Scanner(System.in);
+
+		int[] dr = { -1, -1, -1, 0, 1, 1, 1, 0 };
+		int[] dc = { -1, 0, 1, 1, 1, 0, -1, -1 };
+
+		int N = sc.nextInt();
+		int M = sc.nextInt();
+
+		char[][] arr = new char[N][M];
+
+		for (int r = 0; r < N; r++) {
+			String line = sc.next();
+			for (int c = 0; c < M; c++) {
+				arr[r][c] = line.charAt(c);
+			}
+		}
+
+		int result = 0;
+
+		for (int r = 0; r < N; r++) {
+			for (int c = 0; c < M; c++) {
+
+				// 시작이 L이 아니면 continue
+				if (arr[r][c] != 'L')
+					continue;
+
+				// 8방향 모두 확인
+				for (int d = 0; d < 8; d++) {
+					int cnt = 0; // cnt가 3이면 LEE가 연속을 있다는 의미
+					for (int k = 1; k < 3; k++) {
+						int nr = r + dr[d] * k;
+						int nc = c + dc[d] * k;
+
+						if (nr < 0 || nr >= N || nc < 0 || nc >= M)
+							break;
+
+						if (arr[nr][nc] == 'E') cnt++;
+
+					}
+					if (cnt == 2)
+						result++;
+				}
+			}
+		}
+
+		System.out.println(result);
+	}
+}
