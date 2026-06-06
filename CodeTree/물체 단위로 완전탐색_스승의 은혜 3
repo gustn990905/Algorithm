@@ -1,0 +1,64 @@
+import java.util.Arrays;
+import java.util.Scanner;
+
+public class Main {
+	
+	static class Gift implements Comparable<Gift>{
+		int p;
+		int s;
+		
+		Gift(int p, int s) {
+			this.p = p;
+			this.s = s;
+		}
+		
+		@Override
+		public int compareTo(Gift o) {
+			return((this.p+this.s) - (o.p+o.s));
+		}
+	}
+	
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+        
+        int N = sc.nextInt(); // 학생 수
+        int B = sc.nextInt(); // 예산
+        
+        Gift[] gifts = new Gift[N];
+        
+        for(int i=0; i<N; i++) {
+        	gifts[i] = new Gift(sc.nextInt(), sc.nextInt());
+        }
+        
+        int result = 0;
+        // 할인 받을 선물 고르기
+        for(int i=0; i<N; i++) {
+        	
+        	int[] cost = new int[N];
+
+            for (int j = 0; j < N; j++) {
+                if (i == j) {
+                    cost[j] = gifts[j].p / 2 + gifts[j].s;
+                } else {
+                    cost[j] = gifts[j].p + gifts[j].s;
+                }
+            }
+
+            // 실제 구매 비용 기준 정렬
+            Arrays.sort(cost);
+            
+        	int price = 0;
+        	int cnt = 0;
+        	for(int j=0; j<N; j++) {
+        		// 예산 초과하면 중단
+        		if (price + cost[j] > B) break;
+        		
+        		price += cost[j];
+                cnt++;
+        	}
+        	result = Math.max(result, cnt);
+        }
+        
+        System.out.println(result);
+    }
+}
