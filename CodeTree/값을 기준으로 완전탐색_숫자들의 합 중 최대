@@ -1,0 +1,24 @@
+import java.util.Scanner;
+
+public class Main {
+    public static void main(String[] args) {
+    	Scanner sc = new Scanner(System.in);
+    	
+    	int X = sc.nextInt();
+    	int Y = sc.nextInt();
+    	
+    	int maxResult = 0;
+    	for(int i=X; i<=Y; i++) {
+    		String num = String.valueOf(i);
+    		
+    		int sum = 0;
+    		for(int j=0; j<num.length(); j++) {
+    			sum += num.charAt(j) - '0';
+    		}
+    		
+    		maxResult = Math.max(maxResult, sum);
+    	}
+    	
+    	System.out.println(maxResult);
+    }
+}
