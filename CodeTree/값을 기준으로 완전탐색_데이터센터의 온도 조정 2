@@ -1,0 +1,33 @@
+import java.util.Scanner;
+
+public class Main {
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+        
+        int N = sc.nextInt(); // 장비의 수
+        int C = sc.nextInt();
+        int G = sc.nextInt();
+        int H = sc.nextInt();
+        
+        int[][] device = new int[N][2];
+        int limit = 0; // Tb의 가장 큰 값까지만 확인하면 됨
+        for(int i=0; i<N; i++) {
+        	device[i][0] = sc.nextInt();
+        	device[i][1] = sc.nextInt();
+        	limit = Math.max(limit, device[i][1]);
+        }
+        
+        int maxSum = 0;
+        for(int t=-1; t<=limit+1; t++) {
+        	int sum = 0;
+        	for(int i=0; i<N; i++) {
+        		if(t < device[i][0]) sum += C;
+        		else if(t >= device[i][0] && t <= device[i][1]) sum += G;
+        		else sum += H;
+        	}
+        	maxSum = Math.max(maxSum, sum);
+        }
+        
+        System.out.println(maxSum);
+    }
+}
