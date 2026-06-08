@@ -1,0 +1,46 @@
+import java.util.Scanner;
+
+public class Main {
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+        
+        int N = sc.nextInt();
+        int[][] arr = new int[N][3];
+        for(int n=0; n<N; n++) {
+        	arr[n][0] = sc.nextInt();
+        	arr[n][1] = sc.nextInt();
+        	arr[n][2] = sc.nextInt();
+        }
+        
+        int maxScore = 0;
+        // 조약돌을 넣을 컵의 위치
+        for(int i=0; i<3; i++) {
+        	boolean[] stone = new boolean[3];
+        	stone[i] = true; // 조약돌이 있는 위치
+        	
+        	int score = 0;
+        	for(int n=0; n<N; n++) {
+        		int a = arr[n][0]-1;
+        		int b = arr[n][1]-1;
+        		int c = arr[n][2]-1;
+        		
+        		if(!stone[a] && !stone[b]) {
+        			if(stone[c]) score++;
+        		}
+        		else if(stone[a] && !stone[b]) {
+        			stone[a] = false;
+        			stone[b] = true;
+        			if(stone[c]) score++;
+        		}
+        		else if(!stone[a] && stone[b]) {
+        			stone[a] = true;
+        			stone[b] = false;
+        			if(stone[c]) score++;
+        		}
+        	}
+        	maxScore = Math.max(maxScore, score);
+        }
+        
+        System.out.println(maxScore);
+    }
+}
