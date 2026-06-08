@@ -1,0 +1,45 @@
+import java.util.ArrayList;
+import java.util.Scanner;
+
+public class Main {
+	
+	static class Point {
+		char type;
+		int pos;
+		
+		Point(char type, int pos) {
+			this.type = type;
+			this.pos = pos;
+		}
+	}
+	
+    public static void main(String[] args) {
+    	Scanner sc = new Scanner(System.in);
+    	
+    	int T = sc.nextInt();
+    	int a = sc.nextInt();
+    	int b = sc.nextInt();
+    	
+    	ArrayList<Point> list = new ArrayList<>();
+    	for(int t=0; t<T; t++) {
+    		list.add(new Point(sc.next().charAt(0), sc.nextInt()));
+    	}
+    	
+    	int answer = 0;
+    	for(int i=a; i<=b; i++) {
+    		int nearestS = Integer.MAX_VALUE;
+    		int nearestN = Integer.MAX_VALUE;
+    		
+    		for(Point p : list) {
+    			int dist = Math.abs(i - p.pos);
+    			
+    			if(p.type == 'S') nearestS = Math.min(nearestS, dist);
+    			else nearestN = Math.min(nearestN, dist);
+    		}
+    		
+    		if(nearestS <= nearestN) answer++;
+    	}
+    	
+    	System.out.println(answer);
+    }
+}
