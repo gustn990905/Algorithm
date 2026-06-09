@@ -1,0 +1,51 @@
+import java.util.*;
+
+public class Main {
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+
+        char[][] board = new char[3][3];
+
+        for (int i = 0; i < 3; i++) {
+            String s = sc.next();
+            for (int j = 0; j < 3; j++) {
+                board[i][j] = s.charAt(j);
+            }
+        }
+
+        HashSet<String> teams = new HashSet<>();
+
+        // 가로
+        for (int i = 0; i < 3; i++) {
+            check(board[i][0], board[i][1], board[i][2], teams);
+        }
+
+        // 세로
+        for (int j = 0; j < 3; j++) {
+            check(board[0][j], board[1][j], board[2][j], teams);
+        }
+
+        // 대각선
+        check(board[0][0], board[1][1], board[2][2], teams);
+        check(board[0][2], board[1][1], board[2][0], teams);
+
+        System.out.println(teams.size());
+    }
+
+    static void check(char a, char b, char c, HashSet<String> teams) {
+        HashSet<Character> set = new HashSet<>();
+
+        set.add(a);
+        set.add(b);
+        set.add(c);
+
+        // 정확히 2개의 숫자로 이루어진 경우
+        if (set.size() == 2) {
+            ArrayList<Character> list = new ArrayList<>(set);
+            Collections.sort(list);
+
+            String team = "" + list.get(0) + list.get(1);
+            teams.add(team);
+        }
+    }
+}
