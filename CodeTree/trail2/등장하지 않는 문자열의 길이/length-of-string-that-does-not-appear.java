@@ -1,0 +1,35 @@
+import java.util.HashMap;
+import java.util.Scanner;
+
+public class Main {
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+        
+        int N = sc.nextInt();
+        String str = sc.next();
+        
+        for(int len = 1; len<=N; len++) {
+            HashMap<String, Integer> map = new HashMap<>();
+            
+            for(int i=0; i<=N-len; i++) {
+                String sub = str.substring(i, i+len);
+                
+                map.put(sub, map.getOrDefault(sub, 0) + 1);
+            }
+            
+            boolean ok = true;
+            
+            for(int cnt : map.values()) {
+                if(cnt >= 2) {
+                    ok = false;
+                    break;
+                }
+            }
+            
+            if(ok) {
+                System.out.println(len);
+                return;
+            }
+        }
+    }
+}
