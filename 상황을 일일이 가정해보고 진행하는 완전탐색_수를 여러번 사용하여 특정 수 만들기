@@ -1,0 +1,21 @@
+import java.util.Scanner;
+
+public class Main {
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+        
+        int A = sc.nextInt();
+        int B = sc.nextInt(); 
+        int C = sc.nextInt();
+        
+        int answer = 0;
+        for(int i=0; i * A <= C; i++) {
+        	int remain = C - i*A;
+        	int j = remain / B;
+        	
+        	answer = Math.max(answer, A*i + B*j);
+        }
+        
+        System.out.println(answer);
+    }
+}
