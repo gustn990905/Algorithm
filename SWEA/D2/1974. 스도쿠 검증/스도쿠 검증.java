@@ -1,74 +1,85 @@
-import java.util.Scanner;
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.util.StringTokenizer;
 
-public class Solution {
-	public static void main(String[] args) {
-		Scanner sc = new Scanner(System.in);
+class Solution {
+	public static void main(String[] args) throws NumberFormatException, IOException {
+		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 
-		int T = sc.nextInt();
+		int T = Integer.parseInt(br.readLine());
 		for (int t = 1; t <= T; t++) {
-			int[][] puzzle = new int[9][9];
-			// 스도쿠가 올바른지 판단할 변수
-			boolean pass = true;
-			
-			// 스도쿠 입력 받기
-			for(int r=0; r<9; r++) {
-				for(int c=0; c<9; c++) {
-					puzzle[r][c] = sc.nextInt();
+			int[][] map = new int[9][9];
+
+			for (int r = 0; r < 9; r++) {
+				StringTokenizer st = new StringTokenizer(br.readLine());
+				for (int c = 0; c < 9; c++) {
+					map[r][c] = Integer.parseInt(st.nextToken());
 				}
 			}
-			
-			// 가로 검사
-			for(int r=0; r<9&&pass; r++) {
-				// 숫자 1~9 등장 횟수 저장 배열
-				int[] count = new int[9];
-				for(int c=0; c<9&&pass; c++) {
-					// 숫자 1~9를 인덱스 0~8로 맞추기 위해 -1
-					count[puzzle[r][c] - 1]++;
-				}
-				for(int k=0; k<9; k++) {
-					// 모든 숫자가 정확히 1번씩 등장해야 함
-					if(count[k] != 1) {
-						pass = false;
+
+			boolean possible = true; // 스도쿠 조건 만족 여부
+
+			// 행 검사
+			loop: 
+				for (int r = 0; r < 9; r++) {
+				boolean[] check = new boolean[9];
+				for (int c = 0; c < 9; c++) {
+					// 숫자가 처음 등장
+					if (!check[map[r][c]-1])
+						check[map[r][c]-1] = true;
+
+					// 같은 숫자 등장
+					else {
+						possible = false;
+						break loop;
 					}
 				}
 			}
-			
-			// 세로 검사
-			for(int c=0; c<9&&pass; c++) {
-				int[] count = new int[9];
-				for(int r=0; r<9&&pass; r++) {
-					count[puzzle[r][c] - 1]++;
-				}
-				for(int k=0; k<9; k++) {
-					if(count[k] != 1) {
-						pass = false;
-					}
-				}
-			}
-			
-			// 3x3 박스 검사
-			// 3칸씩 이동하면서 9개의 작은 박스 검사
-			for(int r=0; r<9&&pass; r+=3) {
-				for(int c=0; c<9&&pass; c+=3) {
-					int[] count = new int[9];
-					for(int r1=r; r1<r+3; r1++) {
-						for(int c1=c; c1<c+3; c1++) {
-							count[puzzle[r1][c1] - 1]++;
-						}
-					}
-					for(int k=0; k<9; k++) {
-						if(count[k] != 1) {
-							pass = false;
+
+			// 열 검사
+			if (possible) {
+				loop2: 
+					for (int c = 0; c < 9; c++) {
+					boolean[] check = new boolean[9];
+					for (int r = 0; r < 9; r++) {
+						// 숫자가 처음 등장
+						if (!check[map[r][c]-1])
+							check[map[r][c]-1] = true;
+
+						// 같은 숫자 등장
+						else {
+							possible = false;
+							break loop2;
 						}
 					}
 				}
 			}
 			
-			if(pass) {
-				System.out.println("#" + t + " " + 1);
-			} else {
-				System.out.println("#" + t + " " + 0);
+			// 3x3 검사
+			if(possible) {
+				loop3:
+				for(int r=0; r<9; r+=3) {
+					for(int c=0; c<9; c+=3) {
+						boolean[] check = new boolean[9];
+						for(int i=r; i<r+3; i++) {
+							for(int j=c; j<c+3; j++) {
+								// 숫자가 처음 등장
+								if (!check[map[i][j]-1])
+									check[map[i][j]-1] = true;
+
+								// 같은 숫자 등장
+								else {
+									possible = false;
+									break loop3;
+								}
+							}
+						}
+					}
+				}
 			}
+			if(possible) System.out.println("#" + t + " 1");
+			else System.out.println("#" + t + " 0");
 		}
 	}
 }
