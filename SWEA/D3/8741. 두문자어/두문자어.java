@@ -1,0 +1,19 @@
+import java.util.Scanner;
+
+class Solution {
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+
+        int T = sc.nextInt();
+        for(int t=1; t<=T; t++) {
+            StringBuilder result = new StringBuilder();
+
+            for(int i=0; i<3; i++) {
+                String word = sc.next();
+
+                result.append(Character.toUpperCase(word.charAt(0)));
+            }
+            System.out.println("#" + t + " " + result);
+        }
+    }
+}
